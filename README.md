@@ -1,4 +1,4 @@
-<h1>Lista de Tarefas com GETx e SQFlite</h1> 
+<h1>Anotações Rápidas com SQFlite</h1> 
 
 <p align="center">
   <img src="https://img.shields.io/static/v1?label=dart&message=language&color=blue&style=for-the-badge&logo=DART"/>  
