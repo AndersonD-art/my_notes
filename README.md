@@ -111,6 +111,6 @@ git clone https://github.com/AndersonD-art/my_notes.git
 
 ## 📝 Licença 
 
-The [MIT License]() (MIT)
+The [MIT License](https://github.com/AndersonD-art/my_notes/blob/master/LICENSE) (MIT)
 
 Copyright :copyright: 2021 - My Notes
