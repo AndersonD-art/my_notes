@@ -3,6 +3,7 @@ import 'package:intl/intl.dart';
 import 'package:intl/date_symbol_data_local.dart';
 import 'package:minhas_anotacoes/app/controller/home_controller.dart';
 import 'package:minhas_anotacoes/app/model/annotation_model.dart';
+import 'package:minhas_anotacoes/app/widget/fancy_fab_widget.dart';
 import 'package:minhas_anotacoes/app/widget/update_display_widget.dart';
 
 class AnnotationRecover extends StatefulWidget {
@@ -152,7 +153,15 @@ class _AnnotationRecoverState extends State<AnnotationRecover> {
           ),
         ],
       ),
-      floatingActionButton: FloatingActionButton(
+      floatingActionButton: FancyFab(
+        onPressed: () async {
+          await showDialog(
+              context: context, builder: (_) => UpadateDisplayWidget());
+          _recoverAnnotation();
+        },
+      ),
+
+      /* FloatingActionButton(
         onPressed: () async {
           await showDialog(
               context: context, builder: (_) => UpadateDisplayWidget());
@@ -161,7 +170,7 @@ class _AnnotationRecoverState extends State<AnnotationRecover> {
         backgroundColor: Theme.of(context).backgroundColor,
         foregroundColor: Colors.white,
         child: Icon(Icons.add),
-      ),
+      ), */
     );
   }
 
