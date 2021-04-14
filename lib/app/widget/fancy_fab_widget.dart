@@ -92,7 +92,7 @@ class _FancyFabState extends State<FancyFab>
   Widget image() {
     return Container(
       height: 50,
-      margin: EdgeInsets.only(right: 10.0),
+      margin: EdgeInsets.only(right: 5.0),
       child: Row(
         mainAxisSize: MainAxisSize.min,
         children: <Widget>[
