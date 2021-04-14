@@ -160,17 +160,6 @@ class _AnnotationRecoverState extends State<AnnotationRecover> {
           _recoverAnnotation();
         },
       ),
-
-      /* FloatingActionButton(
-        onPressed: () async {
-          await showDialog(
-              context: context, builder: (_) => UpadateDisplayWidget());
-          _recoverAnnotation();
-        },
-        backgroundColor: Theme.of(context).backgroundColor,
-        foregroundColor: Colors.white,
-        child: Icon(Icons.add),
-      ), */
     );
   }
 
