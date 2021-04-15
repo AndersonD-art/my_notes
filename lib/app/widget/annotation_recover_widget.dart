@@ -71,21 +71,23 @@ class _AnnotationRecoverState extends State<AnnotationRecover> {
                                     builder: (_) => AlertDialog(
                                       title: RichText(
                                         text: TextSpan(
-                                            text:
-                                                "Deseja excluir a anotação com o título: ",
-                                            style: TextStyle(
-                                              color: Colors.black,
-                                              fontSize: 15,
+                                          text:
+                                              "Deseja excluir a anotação com o título: ",
+                                          style: TextStyle(
+                                            color: Colors.black,
+                                            fontSize: 15,
+                                          ),
+                                          children: <TextSpan>[
+                                            TextSpan(
+                                              text: " ${annotation.title}?",
+                                              style: TextStyle(
+                                                color: Colors.red,
+                                                fontWeight: FontWeight.w500,
+                                                fontSize: 15,
+                                              ),
                                             ),
-                                            children: <TextSpan>[
-                                              TextSpan(
-                                                  text: " ${annotation.title}?",
-                                                  style: TextStyle(
-                                                    color: Colors.red,
-                                                    fontWeight: FontWeight.w500,
-                                                    fontSize: 15,
-                                                  ))
-                                            ]),
+                                          ],
+                                        ),
                                       ),
                                       actions: <Widget>[
                                         TextButton(

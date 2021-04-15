@@ -125,9 +125,10 @@ class _FancyFabState extends State<FancyFab>
                 Navigator.push(
                   context,
                   MaterialPageRoute(
-                      builder: (context) => ConstructionScreen(
-                            title: 'Imagem',
-                          )),
+                    builder: (context) => ConstructionScreen(
+                      title: 'Imagem',
+                    ),
+                  ),
                 );
               },
               tooltip: 'Image',
@@ -173,9 +174,10 @@ class _FancyFabState extends State<FancyFab>
                 Navigator.push(
                   context,
                   MaterialPageRoute(
-                      builder: (context) => ConstructionScreen(
-                            title: 'Audio',
-                          )),
+                    builder: (context) => ConstructionScreen(
+                      title: 'Audio',
+                    ),
+                  ),
                 );
               },
               tooltip: 'Audio',
