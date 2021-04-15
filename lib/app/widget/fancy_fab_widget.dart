@@ -31,6 +31,7 @@ class _FancyFabState extends State<FancyFab>
   Animation<double> _animation1;
   Animation<double> _animation2;
   Animation<double> _animation3;
+  Animation<double> _animation4;
   HomeProvider homeProvider = HomeProvider();
   AnnotationRecover annotationRecover = AnnotationRecover();
 
@@ -71,6 +72,10 @@ class _FancyFabState extends State<FancyFab>
       parent: _animationController,
       curve: new Interval(0.8, 1.0, curve: Curves.linear),
     );
+    _animation4 = new CurvedAnimation(
+      parent: _animationController,
+      curve: new Interval(1.0, 1.0, curve: Curves.linear),
+    );
     super.initState();
   }
 
@@ -92,7 +97,7 @@ class _FancyFabState extends State<FancyFab>
   Widget image() {
     return Container(
       height: 50,
-      margin: EdgeInsets.only(right: 5.0),
+      margin: EdgeInsets.only(right: 1.0),
       child: Row(
         mainAxisSize: MainAxisSize.min,
         children: <Widget>[
@@ -105,7 +110,7 @@ class _FancyFabState extends State<FancyFab>
                 style: TextStyle(
                   fontSize: 13.0,
                   fontFamily: 'Roboto',
-                  color: Color(0xFF9E9E9E),
+                  color: Colors.black54,
                   fontWeight: FontWeight.bold,
                 ),
               ),
@@ -140,7 +145,7 @@ class _FancyFabState extends State<FancyFab>
   Widget voice() {
     return Container(
       height: 50,
-      margin: EdgeInsets.only(left: 10.0),
+      margin: EdgeInsets.only(left: 12.5),
       child: Row(
         mainAxisSize: MainAxisSize.min,
         children: <Widget>[
@@ -153,7 +158,7 @@ class _FancyFabState extends State<FancyFab>
                 style: TextStyle(
                   fontSize: 13.0,
                   fontFamily: 'Roboto',
-                  color: Color(0xFF9E9E9E),
+                  color: Colors.black54,
                   fontWeight: FontWeight.bold,
                 ),
               ),
@@ -188,7 +193,7 @@ class _FancyFabState extends State<FancyFab>
   Widget add() {
     return Container(
       height: 50,
-      margin: EdgeInsets.only(right: 10.0),
+      margin: EdgeInsets.only(right: 7.0),
       child: Row(
         mainAxisSize: MainAxisSize.min,
         children: <Widget>[
@@ -201,7 +206,7 @@ class _FancyFabState extends State<FancyFab>
                 style: TextStyle(
                   fontSize: 13.0,
                   fontFamily: 'Roboto',
-                  color: Color(0xFF9E9E9E),
+                  color: Colors.black54,
                   fontWeight: FontWeight.bold,
                 ),
               ),
@@ -251,34 +256,61 @@ class _FancyFabState extends State<FancyFab>
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      mainAxisAlignment: MainAxisAlignment.end,
+    var background = ScaleTransition(
+      scale: _animation4,
+      alignment: FractionalOffset.bottomLeft,
+      child: GestureDetector(
+        onTap: () {
+          animate();
+        },
+        child: OverflowBox(
+          minWidth: 0.0,
+          minHeight: 0.0,
+          maxWidth: double.infinity,
+          maxHeight: double.infinity,
+          child: Container(
+            color: Colors.black38,
+            width: MediaQuery.of(context).size.width * 2,
+            height: MediaQuery.of(context).size.height * 2,
+          ),
+        ),
+      ),
+    );
+    return Stack(
+      alignment: Alignment.topRight,
+      clipBehavior: Clip.none,
       children: [
-        Transform(
-          transform: Matrix4.translationValues(
-            0.0,
-            _translateButton.value * 3.0,
-            0.0,
-          ),
-          child: image(),
+        background,
+        Column(
+          mainAxisAlignment: MainAxisAlignment.end,
+          children: [
+            Transform(
+              transform: Matrix4.translationValues(
+                0.0,
+                _translateButton.value * 3.0,
+                0.0,
+              ),
+              child: image(),
+            ),
+            Transform(
+              transform: Matrix4.translationValues(
+                0.0,
+                _translateButton.value * 2.0,
+                0.0,
+              ),
+              child: voice(),
+            ),
+            Transform(
+              transform: Matrix4.translationValues(
+                0.0,
+                _translateButton.value,
+                0.0,
+              ),
+              child: add(),
+            ),
+            toggle(),
+          ],
         ),
-        Transform(
-          transform: Matrix4.translationValues(
-            0.0,
-            _translateButton.value * 2.0,
-            0.0,
-          ),
-          child: voice(),
-        ),
-        Transform(
-          transform: Matrix4.translationValues(
-            0.0,
-            _translateButton.value,
-            0.0,
-          ),
-          child: add(),
-        ),
-        toggle(),
       ],
     );
   }
