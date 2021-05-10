@@ -2,6 +2,7 @@
     package="br.com.andersond.my_notes">
    <application
         android:label="my_notes"
+        android:requestLegacyExternalStorage="true"
         android:icon="@mipmap/ic_launcher">
         <activity
             android:name=".MainActivity"
@@ -38,4 +39,7 @@
             android:name="flutterEmbedding"
             android:value="2" />
     </application>
+    <uses-permission android:name="android.permission.RECORD_AUDIO"/>
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
 </manifest>
