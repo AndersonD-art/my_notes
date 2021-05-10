@@ -48,7 +48,6 @@ class _ListRecordScreenState extends State<ListRecordScreen> {
               initiallyExpanded: index == _selected,
               title: Text(
                 'Record ${widget.records.length - index}',
-                style: TextStyle(color: Colors.black),
               ),
               subtitle: Text(
                 _getTime(filePath: widget?.records?.elementAt(index)),
@@ -60,6 +59,9 @@ class _ListRecordScreenState extends State<ListRecordScreen> {
                     setState(() {
                       Duration(seconds: 20000);
                       _selected = index;
+                      advancedPlayer.stop();
+                      isPlay = false;
+                      _percent = 0.0;
                     });
                   else
                     setState(() {

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:minhas_anotacoes/app/controller/home_controller.dart';
+import 'package:minhas_anotacoes/app/screens/audio_record/home_record_screens.dart';
 import 'package:minhas_anotacoes/app/screens/construction_screens.dart';
 import 'package:minhas_anotacoes/app/widget/annotation_recover_widget.dart';
 import 'animation/circular_button_widget.dart';
@@ -174,9 +175,7 @@ class _FancyFabState extends State<FancyFab>
                 Navigator.push(
                   context,
                   MaterialPageRoute(
-                    builder: (context) => ConstructionScreen(
-                      title: 'Audio',
-                    ),
+                    builder: (context) => HomeRecordScreen(),
                   ),
                 );
               },
