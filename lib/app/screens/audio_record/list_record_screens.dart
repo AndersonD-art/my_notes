@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:audioplayers/audioplayers.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:minhas_anotacoes/app/screens/audio_record/widget/custom_expansion_tile.dart';
 import 'package:share/share.dart';
 
 class ListRecordScreen extends StatefulWidget {
@@ -24,124 +25,144 @@ class _ListRecordScreenState extends State<ListRecordScreen> {
   int _selected = -1;
   bool isPlay = false;
   AudioPlayer advancedPlayer = AudioPlayer();
+
   @override
   Widget build(BuildContext context) {
     return ListView.builder(
+      key: Key('builder ${_selected.toString()}'),
       itemCount: widget.records.length,
       shrinkWrap: true,
-      itemBuilder: (BuildContext context, int i) {
+      itemBuilder: (BuildContext context, int index) {
         return Card(
           elevation: 5,
-          child: ExpansionTile(
-            title: Text(
-              'Record ${widget.records.length - i}',
-              style: TextStyle(color: Colors.black),
+          child: Theme(
+            data: ThemeData(
+              accentColor: Colors.red,
+              unselectedWidgetColor: Colors.deepPurpleAccent,
+              textTheme: TextTheme(
+                subtitle1: TextStyle(color: Colors.deepPurpleAccent),
+              ),
             ),
-            subtitle: Text(
-              _getTime(filePath: widget?.records?.elementAt(i)),
-              style: TextStyle(color: Colors.black38),
-            ),
-            onExpansionChanged: ((newState) {
-              if (newState) {
-                setState(() {
-                  _selected = i;
-                });
-              }
-            }),
-            children: [
-              Container(
-                height: 100,
-                padding: const EdgeInsets.all(10),
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    LinearProgressIndicator(
-                      minHeight: 5,
-                      backgroundColor: Colors.black,
-                      valueColor: AlwaysStoppedAnimation<Color>(Colors.green),
-                      value: _selected == i ? _percent : 0,
-                    ),
-                    Row(
-                      children: [
-                        (isPlay)
-                            ? _Presso(
-                                ico: Icons.pause,
-                                onPressed: () {
-                                  setState(() {
-                                    isPlay = false;
-                                  });
-                                  advancedPlayer.pause();
-                                })
-                            : _Presso(
-                                ico: Icons.play_arrow,
-                                onPressed: () {
-                                  setState(() {
-                                    isPlay = true;
-                                  });
-                                  advancedPlayer.play(
-                                      widget.records.elementAt(i),
-                                      isLocal: true);
-                                  setState(() {});
-                                  setState(() {
-                                    _selected = i;
-                                    _percent = 0.0;
-                                  });
-                                  advancedPlayer.onPlayerCompletion.listen((_) {
+            child: CustomExpansionTile(
+              key: Key(index.toString()),
+              initiallyExpanded: index == _selected,
+              title: Text(
+                'Record ${widget.records.length - index}',
+                style: TextStyle(color: Colors.black),
+              ),
+              subtitle: Text(
+                _getTime(filePath: widget?.records?.elementAt(index)),
+                style: TextStyle(color: Colors.black38),
+              ),
+              onExpansionChanged: ((newState) {
+                if (newState) {
+                  if (newState)
+                    setState(() {
+                      Duration(seconds: 20000);
+                      _selected = index;
+                    });
+                  else
+                    setState(() {
+                      _selected = -1;
+                    });
+                }
+              }),
+              children: [
+                Container(
+                  height: 100,
+                  padding: const EdgeInsets.all(10),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      LinearProgressIndicator(
+                        minHeight: 5,
+                        backgroundColor: Colors.black,
+                        valueColor: AlwaysStoppedAnimation<Color>(Colors.green),
+                        value: _selected == index ? _percent : 0,
+                      ),
+                      Row(
+                        children: [
+                          (isPlay)
+                              ? _Presso(
+                                  ico: Icons.pause,
+                                  onPressed: () {
                                     setState(() {
+                                      isPlay = false;
+                                    });
+                                    advancedPlayer.pause();
+                                  })
+                              : _Presso(
+                                  ico: Icons.play_arrow,
+                                  onPressed: () {
+                                    setState(() {
+                                      isPlay = true;
+                                    });
+                                    advancedPlayer.play(
+                                        widget.records.elementAt(index),
+                                        isLocal: true);
+                                    setState(() {});
+                                    setState(() {
+                                      _selected = index;
                                       _percent = 0.0;
                                     });
-                                  });
-                                  advancedPlayer.onDurationChanged
-                                      .listen((duration) {
-                                    setState(() {
-                                      _totalTime = duration.inMicroseconds;
+                                    advancedPlayer.onPlayerCompletion
+                                        .listen((_) {
+                                      setState(() {
+                                        _percent = 0.0;
+                                      });
                                     });
-                                  });
-                                  advancedPlayer.onAudioPositionChanged
-                                      .listen((duration) {
-                                    setState(() {
-                                      _currentTime = duration.inMicroseconds;
-                                      _percent = _currentTime.toDouble() /
-                                          _totalTime.toDouble();
+                                    advancedPlayer.onDurationChanged
+                                        .listen((duration) {
+                                      setState(() {
+                                        _totalTime = duration.inMicroseconds;
+                                      });
                                     });
-                                  });
-                                }),
-                        _Presso(
-                            ico: Icons.stop,
-                            onPressed: () {
-                              advancedPlayer.stop();
-                              setState(() {
-                                _percent = 0.0;
-                              });
-                            }),
-                        _Presso(
-                            ico: Icons.delete,
-                            onPressed: () {
-                              Directory appDirec =
-                                  Directory(widget.records.elementAt(i));
-                              appDirec.delete(recursive: true);
-                              Fluttertoast.showToast(msg: "File Deleted");
-                              setState(() {
-                                widget.records
-                                    .remove(widget.records.elementAt(i));
-                              });
-                            }),
-                        _Presso(
-                            ico: Icons.share,
-                            onPressed: () {
-                              Directory appDirec =
-                                  Directory(widget.records.elementAt(i));
-                              List<String> list = [];
-                              list.add(appDirec.path);
-                              Share.shareFiles(list);
-                            }),
-                      ],
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    ),
-                  ],
+                                    advancedPlayer.onAudioPositionChanged
+                                        .listen((duration) {
+                                      setState(() {
+                                        _currentTime = duration.inMicroseconds;
+                                        _percent = _currentTime.toDouble() /
+                                            _totalTime.toDouble();
+                                      });
+                                    });
+                                  }),
+                          _Presso(
+                              ico: Icons.stop,
+                              onPressed: () {
+                                advancedPlayer.stop();
+                                setState(() {
+                                  _percent = 0.0;
+                                });
+                              }),
+                          _Presso(
+                              ico: Icons.delete,
+                              onPressed: () {
+                                Directory appDirec =
+                                    Directory(widget.records.elementAt(index));
+                                appDirec.delete(recursive: true);
+                                Fluttertoast.showToast(msg: "File Deleted");
+                                setState(() {
+                                  widget.records
+                                      .remove(widget.records.elementAt(index));
+                                });
+                              }),
+                          _Presso(
+                              ico: Icons.share,
+                              onPressed: () {
+                                Directory appDirec =
+                                    Directory(widget.records.elementAt(index));
+                                List<String> list = [];
+                                list.add(appDirec.path);
+                                Share.shareFiles(list);
+                              }),
+                        ],
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      ),
+                    ],
+                  ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
         );
       },
