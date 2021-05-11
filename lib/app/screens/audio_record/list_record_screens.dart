@@ -202,6 +202,9 @@ class _Presso extends StatelessWidget {
     return ButtonTheme(
       minWidth: 48.0,
       child: ElevatedButton(
+          style: ElevatedButton.styleFrom(
+            primary: Colors.deepPurple,
+          ),
           child: Icon(
             ico,
             color: Colors.white,
