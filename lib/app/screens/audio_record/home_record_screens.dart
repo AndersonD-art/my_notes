@@ -21,7 +21,7 @@ class _HomeRecordScreenState extends State<HomeRecordScreen> {
   @override
   void initState() {
     records = [];
-    checkAndRequestCameraPermissions();
+    checkAndRequestStoragePermissions();
     setState(() {});
     super.initState();
   }
@@ -34,7 +34,7 @@ class _HomeRecordScreenState extends State<HomeRecordScreen> {
     super.dispose();
   }
 
-  Future<bool> checkAndRequestCameraPermissions() async {
+  Future<bool> checkAndRequestStoragePermissions() async {
     var status = await Permission.storage.status;
     if (!status.isGranted) {
       await Permission.storage.request();
@@ -71,6 +71,8 @@ class _HomeRecordScreenState extends State<HomeRecordScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       floatingActionButton: FloatingActionButton(
+        foregroundColor: Colors.white,
+        backgroundColor: Colors.purple,
         onPressed: () {
           show(context);
         },

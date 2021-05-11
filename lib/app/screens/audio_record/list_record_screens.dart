@@ -53,6 +53,7 @@ class _ListRecordScreenState extends State<ListRecordScreen> {
                 _getTime(filePath: widget?.records?.elementAt(index)),
                 style: TextStyle(color: Colors.black38),
               ),
+              trailing: Icon(Icons.fast_forward_rounded),
               onExpansionChanged: ((newState) {
                 if (newState) {
                   if (newState)
