@@ -107,6 +107,7 @@ class _HomeRecordScreenState extends State<HomeRecordScreen> {
 
   void show(BuildContext context) {
     showModalBottomSheet<void>(
+      isDismissible: false,
       context: context,
       builder: (BuildContext context) {
         return Container(

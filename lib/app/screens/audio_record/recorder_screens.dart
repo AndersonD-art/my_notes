@@ -67,42 +67,76 @@ class _RecordScreenState extends State<RecordScreen> {
               height: 20,
             ),
             stop.value == false
-                ? ElevatedButton(
-                    style: ElevatedButton.styleFrom(
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(10),
-                      ),
-                      primary: Colors.orange,
-                    ),
-                    onPressed: _permission
-                        ? () async {
-                            await _onRecordButtonPressed();
-                            setState(() {});
-                          }
-                        : null,
-                    child: Column(
+                ? Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       children: [
-                        Container(
-                          width: 80,
-                          height: 80,
-                          child: Icon(
-                            _recordIcon,
-                            color: Colors.white,
-                            size: 80,
+                        ElevatedButton(
+                          style: ElevatedButton.styleFrom(
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(10),
+                            ),
+                            primary: Colors.purple,
+                          ),
+                          onPressed: () async {
+                            await _onRecordButtonPressed();
+                          },
+                          child: Column(
+                            children: [
+                              Container(
+                                width: 50,
+                                height: 50,
+                                child: Icon(
+                                  _recordIcon,
+                                  color: Colors.white,
+                                  size: 40,
+                                ),
+                              ),
+                              Padding(
+                                padding: const EdgeInsets.only(bottom: 10),
+                                child: _permission
+                                    ? Text(
+                                        "Gravar",
+                                        style: TextStyle(color: Colors.white),
+                                      )
+                                    : Text(
+                                        "Sem Permisão",
+                                        style: TextStyle(color: Colors.red),
+                                      ),
+                              ),
+                            ],
                           ),
                         ),
-                        Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: _permission
-                              ? Text(
-                                  "Gravar",
-                                  style: TextStyle(color: Colors.white),
-                                )
-                              : Text(
-                                  "Sem Permisão",
-                                  style: TextStyle(color: Colors.red),
+                        ElevatedButton(
+                          style: ElevatedButton.styleFrom(
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(10),
+                            ),
+                            primary: Colors.red,
+                          ),
+                          onPressed: () => Navigator.pop(context),
+                          child: Column(
+                            children: [
+                              Container(
+                                width: 50,
+                                height: 50,
+                                child: Icon(
+                                  Icons.close_rounded,
+                                  color: Colors.white,
+                                  size: 40,
                                 ),
-                        )
+                              ),
+                              Padding(
+                                padding: const EdgeInsets.only(bottom: 10),
+                                child: Text(
+                                  "Sair",
+                                  style: TextStyle(color: Colors.white),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
                       ],
                     ),
                   )
@@ -120,15 +154,14 @@ class _RecordScreenState extends State<RecordScreen> {
                           ),
                           onPressed: () async {
                             await _onRecordButtonPressed();
-                            setState(() {});
                           },
                           child: Container(
-                            width: 80,
-                            height: 80,
+                            width: 50,
+                            height: 50,
                             child: Icon(
                               _recordIcon,
                               color: Colors.white,
-                              size: 50,
+                              size: 40,
                             ),
                           ),
                         ),
@@ -144,12 +177,12 @@ class _RecordScreenState extends State<RecordScreen> {
                                   ? _stop
                                   : null,
                           child: Container(
-                            width: 80,
-                            height: 80,
+                            width: 50,
+                            height: 50,
                             child: Icon(
                               Icons.stop,
                               color: Colors.white,
-                              size: 50,
+                              size: 40,
                             ),
                           ),
                         ),
