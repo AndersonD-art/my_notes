@@ -28,148 +28,157 @@ class _ListRecordScreenState extends State<ListRecordScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return ListView.builder(
-      key: Key('builder ${_selected.toString()}'),
-      itemCount: widget.records.length,
-      shrinkWrap: true,
-      itemBuilder: (BuildContext context, int index) {
-        return Card(
-          elevation: 5,
-          child: Theme(
-            data: ThemeData(
-              accentColor: Colors.red,
-              unselectedWidgetColor: Colors.deepPurpleAccent,
-              textTheme: TextTheme(
-                subtitle1: TextStyle(color: Colors.deepPurpleAccent),
-              ),
-            ),
-            child: CustomExpansionTile(
-              key: Key(index.toString()),
-              initiallyExpanded: index == _selected,
-              title: Text(
-                'Record ${widget.records.length - index}',
-              ),
-              subtitle: Text(
-                _getTime(filePath: widget?.records?.elementAt(index)),
-                style: TextStyle(color: Colors.black38),
-              ),
-              trailing: Icon(Icons.fast_forward_rounded),
-              onExpansionChanged: ((newState) {
-                if (newState) {
-                  if (newState)
-                    setState(() {
-                      Duration(seconds: 20000);
-                      _selected = index;
-                      advancedPlayer.stop();
-                      isPlay = false;
-                      _percent = 0.0;
-                    });
-                  else
-                    setState(() {
-                      _selected = -1;
-                    });
-                }
-              }),
-              children: [
-                Container(
-                  height: 100,
-                  padding: const EdgeInsets.all(10),
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
+    return widget.records.length == 0
+        ? Center(
+            child: Text('Nenhum áudio'),
+          )
+        : ListView.builder(
+            key: Key('builder ${_selected.toString()}'),
+            itemCount: widget.records.length,
+            shrinkWrap: true,
+            itemBuilder: (BuildContext context, int index) {
+              return Card(
+                elevation: 5,
+                child: Theme(
+                  data: ThemeData(
+                    accentColor: Colors.red,
+                    unselectedWidgetColor: Colors.deepPurpleAccent,
+                    textTheme: TextTheme(
+                      subtitle1: TextStyle(color: Colors.deepPurpleAccent),
+                    ),
+                  ),
+                  child: CustomExpansionTile(
+                    key: Key(index.toString()),
+                    initiallyExpanded: index == _selected,
+                    title: Text(
+                      'Record ${widget.records.length - index}',
+                    ),
+                    subtitle: Text(
+                      _getTime(filePath: widget?.records?.elementAt(index)),
+                      style: TextStyle(color: Colors.black38),
+                    ),
+                    trailing: Icon(Icons.fast_forward_rounded),
+                    onExpansionChanged: ((newState) {
+                      if (newState) {
+                        if (newState)
+                          setState(() {
+                            Duration(seconds: 20000);
+                            _selected = index;
+                            advancedPlayer.stop();
+                            isPlay = false;
+                            _percent = 0.0;
+                          });
+                        else
+                          setState(() {
+                            _selected = -1;
+                          });
+                      }
+                    }),
                     children: [
-                      LinearProgressIndicator(
-                        minHeight: 5,
-                        backgroundColor: Colors.black,
-                        valueColor: AlwaysStoppedAnimation<Color>(Colors.green),
-                        value: _selected == index ? _percent : 0,
-                      ),
-                      Row(
-                        children: [
-                          (isPlay)
-                              ? _Presso(
-                                  ico: Icons.pause,
-                                  onPressed: () {
-                                    setState(() {
-                                      isPlay = false;
-                                    });
-                                    advancedPlayer.pause();
-                                  })
-                              : _Presso(
-                                  ico: Icons.play_arrow,
-                                  onPressed: () {
-                                    setState(() {
-                                      isPlay = true;
-                                    });
-                                    advancedPlayer.play(
-                                        widget.records.elementAt(index),
-                                        isLocal: true);
-                                    setState(() {});
-                                    setState(() {
-                                      _selected = index;
-                                      _percent = 0.0;
-                                    });
-                                    advancedPlayer.onPlayerCompletion
-                                        .listen((_) {
+                      Container(
+                        height: 100,
+                        padding: const EdgeInsets.all(10),
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            LinearProgressIndicator(
+                              minHeight: 5,
+                              backgroundColor: Colors.black38,
+                              valueColor:
+                                  AlwaysStoppedAnimation<Color>(Colors.green),
+                              value: _selected == index ? _percent : 0,
+                            ),
+                            Row(
+                              children: [
+                                (isPlay)
+                                    ? _Presso(
+                                        ico: Icons.pause,
+                                        onPressed: () {
+                                          setState(() {
+                                            isPlay = false;
+                                          });
+                                          advancedPlayer.pause();
+                                        })
+                                    : _Presso(
+                                        ico: Icons.play_arrow,
+                                        onPressed: () {
+                                          setState(() {
+                                            isPlay = true;
+                                          });
+                                          advancedPlayer.play(
+                                              widget.records.elementAt(index),
+                                              isLocal: true);
+                                          setState(() {
+                                            _selected = index;
+                                            _percent = 0.0;
+                                          });
+                                          advancedPlayer.onPlayerCompletion
+                                              .listen((_) {
+                                            setState(() {
+                                              _percent = 0.0;
+                                              isPlay = false;
+                                            });
+                                          });
+                                          advancedPlayer.onDurationChanged
+                                              .listen((duration) {
+                                            setState(() {
+                                              _totalTime =
+                                                  duration.inMicroseconds;
+                                            });
+                                          });
+                                          advancedPlayer.onAudioPositionChanged
+                                              .listen((duration) {
+                                            setState(() {
+                                              _currentTime =
+                                                  duration.inMicroseconds;
+                                              _percent =
+                                                  _currentTime.toDouble() /
+                                                      _totalTime.toDouble();
+                                            });
+                                          });
+                                        }),
+                                _Presso(
+                                    ico: Icons.stop,
+                                    onPressed: () {
+                                      advancedPlayer.stop();
                                       setState(() {
                                         _percent = 0.0;
                                       });
-                                    });
-                                    advancedPlayer.onDurationChanged
-                                        .listen((duration) {
+                                    }),
+                                _Presso(
+                                    ico: Icons.delete,
+                                    onPressed: () {
+                                      Directory appDirec = Directory(
+                                          widget.records.elementAt(index));
+                                      appDirec.delete(recursive: true);
+                                      Fluttertoast.showToast(
+                                          msg: "File Deleted");
                                       setState(() {
-                                        _totalTime = duration.inMicroseconds;
+                                        widget.records.remove(
+                                            widget.records.elementAt(index));
                                       });
-                                    });
-                                    advancedPlayer.onAudioPositionChanged
-                                        .listen((duration) {
-                                      setState(() {
-                                        _currentTime = duration.inMicroseconds;
-                                        _percent = _currentTime.toDouble() /
-                                            _totalTime.toDouble();
-                                      });
-                                    });
-                                  }),
-                          _Presso(
-                              ico: Icons.stop,
-                              onPressed: () {
-                                advancedPlayer.stop();
-                                setState(() {
-                                  _percent = 0.0;
-                                });
-                              }),
-                          _Presso(
-                              ico: Icons.delete,
-                              onPressed: () {
-                                Directory appDirec =
-                                    Directory(widget.records.elementAt(index));
-                                appDirec.delete(recursive: true);
-                                Fluttertoast.showToast(msg: "File Deleted");
-                                setState(() {
-                                  widget.records
-                                      .remove(widget.records.elementAt(index));
-                                });
-                              }),
-                          _Presso(
-                              ico: Icons.share,
-                              onPressed: () {
-                                Directory appDirec =
-                                    Directory(widget.records.elementAt(index));
-                                List<String> list = [];
-                                list.add(appDirec.path);
-                                Share.shareFiles(list);
-                              }),
-                        ],
-                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                                    }),
+                                _Presso(
+                                    ico: Icons.share,
+                                    onPressed: () {
+                                      Directory appDirec = Directory(
+                                          widget.records.elementAt(index));
+                                      List<String> list = [];
+                                      list.add(appDirec.path);
+                                      Share.shareFiles(list);
+                                    }),
+                              ],
+                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                            ),
+                          ],
+                        ),
                       ),
                     ],
                   ),
                 ),
-              ],
-            ),
-          ),
-        );
-      },
-    );
+              );
+            },
+          );
   }
 
   String _getTime({@required String filePath}) {

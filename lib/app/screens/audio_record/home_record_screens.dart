@@ -79,7 +79,7 @@ class _HomeRecordScreenState extends State<HomeRecordScreen> {
         child: Icon(Icons.mic),
       ),
       appBar: AppBar(
-        title: Text('Gravador de audio'),
+        title: Text('Meus Áudios'),
         centerTitle: true,
       ),
       body: Column(
