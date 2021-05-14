@@ -3,8 +3,8 @@ import 'package:intl/intl.dart';
 import 'package:intl/date_symbol_data_local.dart';
 import 'package:minhas_anotacoes/app/controller/home_controller.dart';
 import 'package:minhas_anotacoes/app/model/annotation_model.dart';
-import 'package:minhas_anotacoes/app/widget/fancy_fab_widget.dart';
-import 'package:minhas_anotacoes/app/widget/update_display_widget.dart';
+import 'package:minhas_anotacoes/app/widget/animation/fancy_fab_widget.dart';
+import 'package:minhas_anotacoes/app/screens/recover/widget/update_display_widget.dart';
 
 class AnnotationRecover extends StatefulWidget {
   @override

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:minhas_anotacoes/app/screens/home_screens.dart';
+import 'package:minhas_anotacoes/app/screens/home/home_screens.dart';
 
 void main() => runApp(
       MaterialApp(

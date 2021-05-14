@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:minhas_anotacoes/app/widget/annotation_recover_widget.dart';
+import 'package:minhas_anotacoes/app/screens/recover/annotation_recover_widget.dart';
 
 class HomeScreen extends StatefulWidget {
   @override

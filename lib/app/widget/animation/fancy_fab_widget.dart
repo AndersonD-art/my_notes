@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:minhas_anotacoes/app/controller/home_controller.dart';
 import 'package:minhas_anotacoes/app/screens/audio_record/home_record_screens.dart';
 import 'package:minhas_anotacoes/app/screens/construction_screens.dart';
-import 'package:minhas_anotacoes/app/widget/annotation_recover_widget.dart';
-import 'animation/circular_button_widget.dart';
-import 'animation/degree_to_radians_widget.dart';
+import 'package:minhas_anotacoes/app/screens/recover/annotation_recover_widget.dart';
+import 'circular_button_widget.dart';
+import 'degree_to_radians_widget.dart';
 
 class FancyFab extends StatefulWidget {
   final Function() onPressed;
