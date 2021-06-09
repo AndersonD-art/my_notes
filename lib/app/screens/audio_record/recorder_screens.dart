@@ -9,8 +9,8 @@ class RecordScreen extends StatefulWidget {
   final Function save;
 
   const RecordScreen({
-    Key key,
-    this.save,
+    Key? key,
+    required this.save,
   }) : super(key: key);
   @override
   _RecordScreenState createState() => _RecordScreenState();
@@ -20,18 +20,18 @@ class _RecordScreenState extends State<RecordScreen> {
   final ValueNotifier<bool> stop = ValueNotifier<bool>(false);
   final ValueNotifier<RecordingStatus> _currentStatus =
       ValueNotifier<RecordingStatus>(RecordingStatus.Unset);
-  final ValueNotifier<Recording> _current = ValueNotifier<Recording>(null);
-  final ValueNotifier<String> _time = ValueNotifier<String>("0:00:00");
+  final ValueNotifier<Recording?> _current = ValueNotifier<Recording?>(null);
+  final ValueNotifier<String>? _time = ValueNotifier<String>("0:00:00");
 
   IconData _recordIcon = Icons.mic;
   MaterialColor colo = Colors.orange;
   bool _permission = false;
-  FlutterAudioRecorder2 audioRecorder;
+  FlutterAudioRecorder2? audioRecorder;
 
   @override
   void initState() {
     FlutterAudioRecorder2.hasPermissions.then((hasPermision) {
-      if (hasPermision) {
+      if (hasPermision!) {
         _currentStatus.value = RecordingStatus.Initialized;
         _permission = true;
         _init();
@@ -59,7 +59,7 @@ class _RecordScreenState extends State<RecordScreen> {
               height: 20,
             ),
             Text(
-              _time.value == null ? "0:00:00" : _time.value.toString(),
+              _time!.value == "" ? "0:00:00" : _time!.value.toString(),
               style: TextStyle(color: Colors.black, fontSize: 20),
             ),
             SizedBox(
@@ -222,32 +222,32 @@ class _RecordScreenState extends State<RecordScreen> {
   }
 
   _init() async {
-    Directory appDir = await getExternalStorageDirectory();
+    Directory? appDir = await getExternalStorageDirectory();
     String jrecord = 'Audiorecords';
-    String dato = "${DateTime.now()?.millisecondsSinceEpoch?.toString()}.wav";
+    String dato = "${DateTime.now().millisecondsSinceEpoch.toString()}.wav";
     Directory appDirec =
-        Directory("${appDir.parent.parent.parent.parent.path}/$jrecord/");
+        Directory("${appDir!.parent.parent.parent.parent.path}/$jrecord/");
     if (await appDirec.exists()) {
       String patho = "${appDirec.path}$dato";
       audioRecorder =
           FlutterAudioRecorder2(patho, audioFormat: AudioFormat.WAV);
-      await audioRecorder.initialized;
-      var current = await audioRecorder.current(channel: 0);
+      await audioRecorder!.initialized;
+      var current = await audioRecorder!.current(channel: 0);
       _current.value = current;
-      _currentStatus.value = current.status;
+      _currentStatus.value = current!.status!;
     } else {
       await appDirec.create(recursive: true);
       Fluttertoast.showToast(msg: "Start Recording , Press Start");
       String patho = "${appDirec.path}$dato";
       audioRecorder =
           FlutterAudioRecorder2(patho, audioFormat: AudioFormat.WAV);
-      await audioRecorder.initialized;
+      await audioRecorder!.initialized;
     }
   }
 
   _start() async {
     try {
-      await audioRecorder.start();
+      await audioRecorder!.start();
       /* var recording = await audioRecorder.current(channel: 0);
 
       setState(() {
@@ -260,11 +260,11 @@ class _RecordScreenState extends State<RecordScreen> {
           t.cancel();
         }
 
-        var current = await audioRecorder.current(channel: 0);
+        var current = await audioRecorder!.current(channel: 0);
         setState(() {
           _current.value = current;
-          _currentStatus.value = _current.value.status;
-          _time.value = _current.value?.duration?.toString()?.substring(0, 7);
+          _currentStatus.value = _current.value!.status!;
+          _time!.value = _current.value!.duration.toString().substring(0, 7);
         });
       });
     } catch (e) {
@@ -273,7 +273,7 @@ class _RecordScreenState extends State<RecordScreen> {
   }
 
   _resume() async {
-    await audioRecorder.resume();
+    await audioRecorder!.resume();
     Fluttertoast.showToast(msg: "Resume Recording");
     setState(() {
       _recordIcon = Icons.pause;
@@ -282,7 +282,7 @@ class _RecordScreenState extends State<RecordScreen> {
   }
 
   _pause() async {
-    await audioRecorder.pause();
+    await audioRecorder!.pause();
     Fluttertoast.showToast(msg: "Pause Recording");
     setState(() {
       _recordIcon = Icons.play_arrow_rounded;
@@ -291,20 +291,20 @@ class _RecordScreenState extends State<RecordScreen> {
   }
 
   _stop() async {
-    var result = await audioRecorder.stop();
+    var result = await audioRecorder!.stop();
     Fluttertoast.showToast(msg: "Stop Recording , File Saved");
     widget.save();
 
     setState(() {
-      _currentStatus.value = result.status;
-      _current.value.duration = null;
+      _currentStatus.value = result!.status!;
+      _current.value!.duration = null;
       _recordIcon = Icons.mic;
       stop.value = false;
     });
   }
 
   Future<void> _recordo() async {
-    if (await FlutterAudioRecorder2.hasPermissions) {
+    if (await FlutterAudioRecorder2.hasPermissions != null) {
       await _init();
       await _start();
 

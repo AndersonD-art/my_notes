@@ -8,7 +8,7 @@ class AnnotationRepository {
   static final AnnotationRepository _annotationRepository =
       AnnotationRepository._internal();
 
-  Database _db;
+  Database? _db;
 
   factory AnnotationRepository() {
     return _annotationRepository;

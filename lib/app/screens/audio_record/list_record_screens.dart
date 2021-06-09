@@ -1,5 +1,4 @@
 import 'dart:io';
-
 import 'package:audioplayers/audioplayers.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
@@ -7,11 +6,11 @@ import 'package:minhas_anotacoes/app/screens/audio_record/widget/custom_expansio
 import 'package:share/share.dart';
 
 class ListRecordScreen extends StatefulWidget {
-  final List<String> records;
+  final List<String>? records;
 
   const ListRecordScreen({
-    Key key,
-    this.records,
+    Key? key,
+    required this.records,
   }) : super(key: key);
 
   @override
@@ -19,8 +18,8 @@ class ListRecordScreen extends StatefulWidget {
 }
 
 class _ListRecordScreenState extends State<ListRecordScreen> {
-  int _totalTime;
-  int _currentTime;
+  int? _totalTime;
+  int? _currentTime;
   double _percent = 0.0;
   int _selected = -1;
   bool isPlay = false;
@@ -28,13 +27,13 @@ class _ListRecordScreenState extends State<ListRecordScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return widget.records.length == 0
+    return widget.records!.length == 0
         ? Center(
             child: Text('Nenhum áudio'),
           )
         : ListView.builder(
             key: Key('builder ${_selected.toString()}'),
-            itemCount: widget.records.length,
+            itemCount: widget.records!.length,
             shrinkWrap: true,
             itemBuilder: (BuildContext context, int index) {
               return Card(
@@ -51,10 +50,10 @@ class _ListRecordScreenState extends State<ListRecordScreen> {
                     key: Key(index.toString()),
                     initiallyExpanded: index == _selected,
                     title: Text(
-                      'Record ${widget.records.length - index}',
+                      'Record ${widget.records!.length - index}',
                     ),
                     subtitle: Text(
-                      _getTime(filePath: widget?.records?.elementAt(index)),
+                      _getTime(filePath: widget.records!.elementAt(index)),
                       style: TextStyle(color: Colors.black38),
                     ),
                     trailing: Icon(Icons.fast_forward_rounded),
@@ -106,7 +105,7 @@ class _ListRecordScreenState extends State<ListRecordScreen> {
                                             isPlay = true;
                                           });
                                           advancedPlayer.play(
-                                              widget.records.elementAt(index),
+                                              widget.records!.elementAt(index),
                                               isLocal: true);
                                           setState(() {
                                             _selected = index;
@@ -132,8 +131,8 @@ class _ListRecordScreenState extends State<ListRecordScreen> {
                                               _currentTime =
                                                   duration.inMicroseconds;
                                               _percent =
-                                                  _currentTime.toDouble() /
-                                                      _totalTime.toDouble();
+                                                  _currentTime!.toDouble() /
+                                                      _totalTime!.toDouble();
                                             });
                                           });
                                         }),
@@ -149,20 +148,20 @@ class _ListRecordScreenState extends State<ListRecordScreen> {
                                     ico: Icons.delete,
                                     onPressed: () {
                                       Directory appDirec = Directory(
-                                          widget.records.elementAt(index));
+                                          widget.records!.elementAt(index));
                                       appDirec.delete(recursive: true);
                                       Fluttertoast.showToast(
                                           msg: "File Deleted");
                                       setState(() {
-                                        widget.records.remove(
-                                            widget.records.elementAt(index));
+                                        widget.records!.remove(
+                                            widget.records!.elementAt(index));
                                       });
                                     }),
                                 _Presso(
                                     ico: Icons.share,
                                     onPressed: () {
                                       Directory appDirec = Directory(
-                                          widget.records.elementAt(index));
+                                          widget.records!.elementAt(index));
                                       List<String> list = [];
                                       list.add(appDirec.path);
                                       Share.shareFiles(list);
@@ -181,7 +180,7 @@ class _ListRecordScreenState extends State<ListRecordScreen> {
           );
   }
 
-  String _getTime({@required String filePath}) {
+  String _getTime({required String filePath}) {
     String fromPath = filePath.substring(
         filePath.lastIndexOf('/') + 1, filePath.lastIndexOf('.'));
     if (fromPath.startsWith('1', 0)) {
@@ -204,7 +203,8 @@ class _Presso extends StatelessWidget {
   final IconData ico;
   final VoidCallback onPressed;
 
-  const _Presso({Key key, this.ico, this.onPressed}) : super(key: key);
+  const _Presso({Key? key, required this.ico, required this.onPressed})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {

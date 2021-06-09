@@ -20,7 +20,7 @@ class HomeProvider {
     return listTemp;
   }
 
-  saveUpdateAnnotation({AnnotationModel annotationSelected}) async {
+  saveUpdateAnnotation({AnnotationModel? annotationSelected}) async {
     String title = titleController.text;
     String description = descriptionController.text;
 

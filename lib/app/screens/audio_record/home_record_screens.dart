@@ -12,10 +12,10 @@ class HomeRecordScreen extends StatefulWidget {
 }
 
 class _HomeRecordScreenState extends State<HomeRecordScreen> {
-  Directory appDir;
-  Stream<FileSystemEntity> fileStream;
-  List<String> records;
-  FlutterAudioRecorder2 audioRecorder;
+  late Directory? appDir;
+  late Stream<FileSystemEntity>? fileStream;
+  late List<String>? records;
+  late FlutterAudioRecorder2? audioRecorder;
 
   @override
   void initState() {
@@ -38,27 +38,27 @@ class _HomeRecordScreenState extends State<HomeRecordScreen> {
     if (!status.isGranted) {
       await Permission.storage.request();
       getExternalStorageDirectory().then((value) async {
-        appDir = value.parent.parent.parent.parent;
-        Directory appDirec = Directory("${appDir.path}/Audiorecords/");
+        appDir = value!.parent.parent.parent.parent;
+        Directory appDirec = Directory("${appDir!.path}/Audiorecords/");
         appDir = appDirec;
         await appDirec.create(recursive: true);
-        appDir.list().listen((onData) {
-          records.add(onData.path);
+        appDir!.list().listen((onData) {
+          records!.add(onData.path);
         }).onDone(() {
-          records = records.reversed.toList();
+          records = records!.reversed.toList();
           setState(() {});
         });
       });
       return false;
     } else {
       getExternalStorageDirectory().then((value) async {
-        appDir = value.parent.parent.parent.parent;
-        Directory appDirec = Directory("${appDir.path}/Audiorecords/");
+        appDir = value!.parent.parent.parent.parent;
+        Directory appDirec = Directory("${appDir!.path}/Audiorecords/");
         appDir = appDirec;
-        appDir.list().listen((onData) {
-          records.add(onData.path);
+        appDir!.list().listen((onData) {
+          records!.add(onData.path);
         }).onDone(() {
-          records = records.reversed.toList();
+          records = records!.reversed.toList();
           setState(() {});
         });
       });
@@ -94,12 +94,12 @@ class _HomeRecordScreenState extends State<HomeRecordScreen> {
   }
 
   _onFinish() {
-    records.clear();
-    appDir.list().listen((onData) {
-      records.add(onData.path);
+    records!.clear();
+    appDir!.list().listen((onData) {
+      records!.add(onData.path);
     }).onDone(() {
-      records.sort();
-      records = records.reversed.toList();
+      records!.sort();
+      records = records!.reversed.toList();
       setState(() {});
     });
   }

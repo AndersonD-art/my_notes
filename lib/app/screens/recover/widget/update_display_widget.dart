@@ -4,10 +4,9 @@ import 'package:minhas_anotacoes/app/model/annotation_model.dart';
 
 class UpadateDisplayWidget extends StatelessWidget {
   final HomeProvider homeProvider = HomeProvider();
+  final AnnotationModel? annotation;
 
-  final AnnotationModel annotation;
-
-  UpadateDisplayWidget({Key key, this.annotation}) : super(key: key);
+  UpadateDisplayWidget({Key? key, this.annotation}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -51,7 +50,7 @@ class UpadateDisplayWidget extends StatelessWidget {
               ),
               onPressed: () {
                 homeProvider.saveUpdateAnnotation(
-                    annotationSelected: annotation);
+                    annotationSelected: annotation!);
 
                 Navigator.pop(context);
               },
@@ -63,15 +62,15 @@ class UpadateDisplayWidget extends StatelessWidget {
     );
   }
 
-  _displayRegistrationScreen({AnnotationModel annotation}) {
+  _displayRegistrationScreen({required AnnotationModel? annotation}) {
     String textSaveUpadate = "";
     if (annotation == null) {
       homeProvider.titleController.text = "";
       homeProvider.descriptionController.text = "";
       textSaveUpadate = "Salvar";
     } else {
-      homeProvider.titleController.text = annotation.title;
-      homeProvider.descriptionController.text = annotation.description;
+      homeProvider.titleController.text = annotation.title!;
+      homeProvider.descriptionController.text = annotation.description!;
       textSaveUpadate = "Atualizar";
     }
     return textSaveUpadate;

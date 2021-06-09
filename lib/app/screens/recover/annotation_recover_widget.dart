@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
 import 'package:intl/date_symbol_data_local.dart';
+import 'package:intl/intl.dart';
 import 'package:minhas_anotacoes/app/controller/home_controller.dart';
 import 'package:minhas_anotacoes/app/model/annotation_model.dart';
 import 'package:minhas_anotacoes/app/widget/animation/fancy_fab_widget.dart';
@@ -39,9 +39,9 @@ class _AnnotationRecoverState extends State<AnnotationRecover> {
                       final annotation = annotations[index];
                       return Card(
                         child: ListTile(
-                          title: Text(annotation.title),
+                          title: Text(annotation.title!),
                           subtitle: Text(
-                            "${_formatDate(annotation.date)} - ${annotation.description}",
+                            "${_formatDate(annotation.date!)} - ${annotation.description}",
                           ),
                           trailing: Row(
                             mainAxisSize: MainAxisSize.min,
@@ -123,7 +123,7 @@ class _AnnotationRecoverState extends State<AnnotationRecover> {
                                           ),
                                           onPressed: () {
                                             homeProvider.removeAnnotation(
-                                                annotation.id);
+                                                annotation.id!);
                                             _recoverAnnotation();
                                             Navigator.pop(context);
                                           },
@@ -166,10 +166,10 @@ class _AnnotationRecoverState extends State<AnnotationRecover> {
   }
 
   _recoverAnnotation() async {
-    List<AnnotationModel> listTemp = <AnnotationModel>[];
+    List<AnnotationModel>? listTemp = <AnnotationModel>[];
     listTemp = await homeProvider.recoverAnnotation();
     setState(() {
-      annotations = listTemp;
+      annotations = listTemp!;
     });
     listTemp = null;
   }

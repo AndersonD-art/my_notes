@@ -7,12 +7,12 @@ import 'circular_button_widget.dart';
 import 'degree_to_radians_widget.dart';
 
 class FancyFab extends StatefulWidget {
-  final Function() onPressed;
-  final String tooltip;
-  final IconData icon;
+  final Function()? onPressed;
+  final String? tooltip;
+  final IconData? icon;
 
   const FancyFab({
-    Key key,
+    Key? key,
     this.onPressed,
     this.tooltip,
     this.icon,
@@ -24,15 +24,15 @@ class FancyFab extends StatefulWidget {
 class _FancyFabState extends State<FancyFab>
     with SingleTickerProviderStateMixin {
   bool isOpened = false;
-  AnimationController _animationController;
-  Animation<double> _translateButton;
+  late AnimationController _animationController;
+  late Animation<double> _translateButton;
   Curve _curve = Curves.easeOut;
   double _fabHeight = 50.0;
-  Animation rotationAnimation;
-  Animation<double> _animation1;
-  Animation<double> _animation2;
-  Animation<double> _animation3;
-  Animation<double> _animation4;
+  late Animation rotationAnimation;
+  late Animation<double> _animation1;
+  late Animation<double> _animation2;
+  late Animation<double> _animation3;
+  late Animation<double> _animation4;
   HomeProvider homeProvider = HomeProvider();
   AnnotationRecover annotationRecover = AnnotationRecover();
 
@@ -220,7 +220,7 @@ class _FancyFabState extends State<FancyFab>
               onPressed: () async {
                 animate();
                 await Future.delayed(Duration(milliseconds: 100));
-                widget.onPressed();
+                widget.onPressed!();
               },
               tooltip: 'Add',
               child: Icon(
