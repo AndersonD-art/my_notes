@@ -1,7 +1,6 @@
 import 'dart:io';
-
 import 'package:flutter/material.dart';
-import 'package:flutter_audio_recorder/flutter_audio_recorder.dart';
+import 'package:flutter_audio_recorder2/flutter_audio_recorder2.dart';
 import 'package:minhas_anotacoes/app/screens/audio_record/list_record_screens.dart';
 import 'package:minhas_anotacoes/app/screens/audio_record/recorder_screens.dart';
 import 'package:path_provider/path_provider.dart';
@@ -16,7 +15,7 @@ class _HomeRecordScreenState extends State<HomeRecordScreen> {
   Directory appDir;
   Stream<FileSystemEntity> fileStream;
   List<String> records;
-  FlutterAudioRecorder audioRecorder;
+  FlutterAudioRecorder2 audioRecorder;
 
   @override
   void initState() {

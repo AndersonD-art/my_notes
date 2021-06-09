@@ -1,8 +1,7 @@
 import 'dart:async';
 import 'dart:io';
-
 import 'package:flutter/material.dart';
-import 'package:flutter_audio_recorder/flutter_audio_recorder.dart';
+import 'package:flutter_audio_recorder2/flutter_audio_recorder2.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:path_provider/path_provider.dart';
 
@@ -27,11 +26,11 @@ class _RecordScreenState extends State<RecordScreen> {
   IconData _recordIcon = Icons.mic;
   MaterialColor colo = Colors.orange;
   bool _permission = false;
-  FlutterAudioRecorder audioRecorder;
+  FlutterAudioRecorder2 audioRecorder;
 
   @override
   void initState() {
-    FlutterAudioRecorder.hasPermissions.then((hasPermision) {
+    FlutterAudioRecorder2.hasPermissions.then((hasPermision) {
       if (hasPermision) {
         _currentStatus.value = RecordingStatus.Initialized;
         _permission = true;
@@ -230,7 +229,8 @@ class _RecordScreenState extends State<RecordScreen> {
         Directory("${appDir.parent.parent.parent.parent.path}/$jrecord/");
     if (await appDirec.exists()) {
       String patho = "${appDirec.path}$dato";
-      audioRecorder = FlutterAudioRecorder(patho, audioFormat: AudioFormat.WAV);
+      audioRecorder =
+          FlutterAudioRecorder2(patho, audioFormat: AudioFormat.WAV);
       await audioRecorder.initialized;
       var current = await audioRecorder.current(channel: 0);
       _current.value = current;
@@ -239,7 +239,8 @@ class _RecordScreenState extends State<RecordScreen> {
       await appDirec.create(recursive: true);
       Fluttertoast.showToast(msg: "Start Recording , Press Start");
       String patho = "${appDirec.path}$dato";
-      audioRecorder = FlutterAudioRecorder(patho, audioFormat: AudioFormat.WAV);
+      audioRecorder =
+          FlutterAudioRecorder2(patho, audioFormat: AudioFormat.WAV);
       await audioRecorder.initialized;
     }
   }
@@ -303,7 +304,7 @@ class _RecordScreenState extends State<RecordScreen> {
   }
 
   Future<void> _recordo() async {
-    if (await FlutterAudioRecorder.hasPermissions) {
+    if (await FlutterAudioRecorder2.hasPermissions) {
       await _init();
       await _start();
 
