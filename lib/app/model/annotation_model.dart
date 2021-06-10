@@ -1,10 +1,11 @@
 class AnnotationModel {
   int? id;
-  String? title;
-  String? description;
-  String? date;
+  late final String title;
+  late final String description;
+  late final String date;
 
-  AnnotationModel({this.title, this.description, this.date});
+  AnnotationModel(
+      {required this.title, required this.description, required this.date});
 
   AnnotationModel.fromMap(Map map) {
     this.id = map["id"];

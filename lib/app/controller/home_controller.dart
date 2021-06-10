@@ -31,8 +31,8 @@ class HomeProvider {
           date: DateTime.now().toString());
       await _db.saveAnnotation(annotation);
     } else {
-      annotationSelected.title = title;
-      annotationSelected.description = description;
+      annotationSelected.title = title.toString();
+      annotationSelected.description = description.toString();
       annotationSelected.date = DateTime.now().toString();
       await _db.updateAnnotation(annotationSelected);
     }

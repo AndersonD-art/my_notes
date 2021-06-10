@@ -13,7 +13,7 @@ class AnnotationRecover extends StatefulWidget {
 
 class _AnnotationRecoverState extends State<AnnotationRecover> {
   HomeProvider homeProvider = HomeProvider();
-  UpadateDisplayWidget upadateDisplayWidget = UpadateDisplayWidget();
+  late UpadateDisplayWidget upadateDisplayWidget;
 
   List<AnnotationModel> annotations = <AnnotationModel>[];
 
@@ -39,9 +39,9 @@ class _AnnotationRecoverState extends State<AnnotationRecover> {
                       final annotation = annotations[index];
                       return Card(
                         child: ListTile(
-                          title: Text(annotation.title!),
+                          title: Text(annotation.title),
                           subtitle: Text(
-                            "${_formatDate(annotation.date!)} - ${annotation.description}",
+                            "${_formatDate(annotation.date)} - ${annotation.description}",
                           ),
                           trailing: Row(
                             mainAxisSize: MainAxisSize.min,

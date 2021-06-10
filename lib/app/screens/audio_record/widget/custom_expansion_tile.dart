@@ -45,9 +45,9 @@ class CustomExpansionTile extends StatefulWidget {
 
   final Widget? trailing;
 
-  final bool initiallyExpanded;
+  final bool? initiallyExpanded;
 
-  final bool maintainState;
+  final bool? maintainState;
 
   final EdgeInsetsGeometry? tilePadding;
 
@@ -97,8 +97,8 @@ class _CustomExpansionTileState extends State<CustomExpansionTile>
     _backgroundColor =
         _controller.drive(_backgroundColorTween.chain(_easeOutTween));
 
-    _isExpanded = PageStorage.of(context)?.readState(context) as bool? ??
-        widget.initiallyExpanded;
+    _isExpanded = (PageStorage.of(context)?.readState(context) as bool? ??
+        widget.initiallyExpanded)!;
     if (_isExpanded) _controller.value = 1.0;
   }
 
@@ -189,7 +189,7 @@ class _CustomExpansionTileState extends State<CustomExpansionTile>
   @override
   Widget build(BuildContext context) {
     final bool closed = !_isExpanded && _controller.isDismissed;
-    final bool shouldRemoveChildren = closed && !widget.maintainState;
+    final bool shouldRemoveChildren = closed && !widget.maintainState!;
 
     final Widget result = Offstage(
         child: TickerMode(

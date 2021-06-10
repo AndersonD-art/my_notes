@@ -50,7 +50,7 @@ class UpadateDisplayWidget extends StatelessWidget {
               ),
               onPressed: () {
                 homeProvider.saveUpdateAnnotation(
-                    annotationSelected: annotation!);
+                    annotationSelected: annotation);
 
                 Navigator.pop(context);
               },
@@ -69,8 +69,8 @@ class UpadateDisplayWidget extends StatelessWidget {
       homeProvider.descriptionController.text = "";
       textSaveUpadate = "Salvar";
     } else {
-      homeProvider.titleController.text = annotation.title!;
-      homeProvider.descriptionController.text = annotation.description!;
+      homeProvider.titleController.text = annotation.title;
+      homeProvider.descriptionController.text = annotation.description;
       textSaveUpadate = "Atualizar";
     }
     return textSaveUpadate;
