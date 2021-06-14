@@ -3,7 +3,7 @@ import 'package:minhas_anotacoes/app/controller/home_controller.dart';
 import 'package:minhas_anotacoes/app/model/annotation_model.dart';
 
 class UpadateDisplayWidget extends StatelessWidget {
-  final HomeProvider homeProvider = HomeProvider();
+  final HomeController homeController = HomeController();
   final AnnotationModel? annotation;
 
   UpadateDisplayWidget({Key? key, this.annotation}) : super(key: key);
@@ -20,7 +20,7 @@ class UpadateDisplayWidget extends StatelessWidget {
             mainAxisSize: MainAxisSize.min,
             children: <Widget>[
               TextField(
-                controller: homeProvider.titleController,
+                controller: homeController.titleController,
                 autofocus: true,
                 decoration: InputDecoration(
                   labelText: 'Título',
@@ -28,7 +28,7 @@ class UpadateDisplayWidget extends StatelessWidget {
                 ),
               ),
               TextField(
-                controller: homeProvider.descriptionController,
+                controller: homeController.descriptionController,
                 decoration: InputDecoration(
                   labelText: 'Descrição',
                   hintText: 'Digite a descrição...',
@@ -49,7 +49,7 @@ class UpadateDisplayWidget extends StatelessWidget {
                 padding: EdgeInsets.symmetric(vertical: -30.0),
               ),
               onPressed: () {
-                homeProvider.saveUpdateAnnotation(
+                homeController.saveUpdateAnnotation(
                     annotationSelected: annotation);
 
                 Navigator.pop(context);
@@ -65,12 +65,12 @@ class UpadateDisplayWidget extends StatelessWidget {
   _displayRegistrationScreen({required AnnotationModel? annotation}) {
     String textSaveUpadate = "";
     if (annotation == null) {
-      homeProvider.titleController.text = "";
-      homeProvider.descriptionController.text = "";
+      homeController.titleController.text = "";
+      homeController.descriptionController.text = "";
       textSaveUpadate = "Salvar";
     } else {
-      homeProvider.titleController.text = annotation.title;
-      homeProvider.descriptionController.text = annotation.description;
+      homeController.titleController.text = annotation.title;
+      homeController.descriptionController.text = annotation.description;
       textSaveUpadate = "Atualizar";
     }
     return textSaveUpadate;

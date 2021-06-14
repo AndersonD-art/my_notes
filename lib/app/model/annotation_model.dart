@@ -5,7 +5,10 @@ class AnnotationModel {
   late final String date;
 
   AnnotationModel(
-      {required this.title, required this.description, required this.date});
+      {this.id,
+      required this.title,
+      required this.description,
+      required this.date});
 
   AnnotationModel.fromMap(Map map) {
     this.id = map["id"];

@@ -12,7 +12,7 @@ class AnnotationRecover extends StatefulWidget {
 }
 
 class _AnnotationRecoverState extends State<AnnotationRecover> {
-  HomeProvider homeProvider = HomeProvider();
+  HomeController homeController = HomeController();
   late UpadateDisplayWidget upadateDisplayWidget;
 
   List<AnnotationModel> annotations = <AnnotationModel>[];
@@ -122,7 +122,7 @@ class _AnnotationRecoverState extends State<AnnotationRecover> {
                                             ),
                                           ),
                                           onPressed: () {
-                                            homeProvider.removeAnnotation(
+                                            homeController.removeAnnotation(
                                                 annotation.id!);
                                             _recoverAnnotation();
                                             Navigator.pop(context);
@@ -167,7 +167,7 @@ class _AnnotationRecoverState extends State<AnnotationRecover> {
 
   _recoverAnnotation() async {
     List<AnnotationModel>? listTemp = <AnnotationModel>[];
-    listTemp = await homeProvider.recoverAnnotation();
+    listTemp = await homeController.recoverAnnotation();
     setState(() {
       annotations = listTemp!;
     });

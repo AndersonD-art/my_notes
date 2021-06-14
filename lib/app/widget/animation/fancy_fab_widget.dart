@@ -33,7 +33,7 @@ class _FancyFabState extends State<FancyFab>
   late Animation<double> _animation2;
   late Animation<double> _animation3;
   late Animation<double> _animation4;
-  HomeProvider homeProvider = HomeProvider();
+  HomeController homeController = HomeController();
   AnnotationRecover annotationRecover = AnnotationRecover();
 
   @override
