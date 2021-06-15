@@ -35,9 +35,6 @@ class HomeController {
           id: annotationSelected.id,
           description: description,
           date: DateTime.now().toString());
-      //annotationSelected.title = title;
-      //annotationSelected.description = description;
-      //annotationSelected.date = DateTime.now().toString();
       await _db.updateAnnotation(annotationUpdate);
     }
 
