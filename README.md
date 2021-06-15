@@ -1,4 +1,4 @@
-<h1>Anotações Rápidas com SQFlite</h1> 
+<h1>Anotações Rápidas com SQFlite - Null Safety</h1> 
 
 <p align="center">
   <img src="https://img.shields.io/static/v1?label=dart&message=language&color=blue&style=for-the-badge&logo=DART"/>  
@@ -34,7 +34,7 @@
 ## 💻 Descrição do projeto 
 
 <p align="justify">
-  Projeto realizado em Flutter, referente a salvar algumas anotações rápidas, utilizando o banco de dados local SQFlite e alguns conceitos de animação. 
+  Projeto realizado em Flutter, referente a salvar algumas anotações rápidas, utilizando o banco de dados local SQFlite e alguns conceitos de animação. - Null Safety 
 </p>
 
 ---
